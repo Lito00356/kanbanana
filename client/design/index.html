@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jammin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../src/css/main.css">
+</head>
+
+<body id="root">
+    <h1 class="title">Project title</h1>
+
+    <section class="tasks-container">
+
+        <div class="tasks" id="to-do">
+            <strong class="tasks__title">To Do</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">In progress</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">Ready for review</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">Done</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+    </section>
+
+    <div class="menu-items">
+        <div class="scroll-menu" id="menu">
+            <div class="menu__current-project">
+                <strong>Project title</strong>
+                <a href="#">Backlog</a>
+            </div>
+            <div class="menu__projects">
+                <strong class="menu__projects-title">Other projects</strong>
+                <a href="">Project 1</a>
+                <a href="">Project 2</a>
+                <a href="">Project 3</a>
+                <a href="">Project 4</a>
+                <a href="">Project 5</a>
+                <a href="">Project 6</a>
+                <a href="">Project 7</a>
+                <a href="">Project 8</a>
+                <a href="">Project 9</a>
+                <a href="">Project 10</a>
+                <a href="">Project 11</a>
+                <a href="">Project 12</a>
+                <a href="">Project 13</a>
+                <a href="">Project 14</a>
+            </div>
+        </div>
+        <button class="button hamburger" id="closed-menu">
+            <svg class="hamburger-closed" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                </g>
+            </svg>
+        </button>
+        <button class="button" id="opened-menu">
+            <svg class="hamburger-opened" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M4 18H10" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M4 12L16 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                </g>
+            </svg>
+        </button>
+        <button class="button search" id="filter">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+        </button>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+.button {
+  background-color: transparent;
+  border: none;
+  border-radius: 0.625rem;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-color-hover);
+  }
+}
+
+.button--add-tag {
+  font-size: 12px;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid black;
+
+  &:hover {
+    background-color: rgb(255 94 94);
+  }
+}
