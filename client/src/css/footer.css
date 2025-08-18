@@ -1,0 +1,43 @@
+.footer {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: var(--spacing-md) 0;
+}
+
+.footer__list {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: 0;
+}
+
+.footer__list-item {
+  list-style: none;
+}
+
+.footer__list-link {
+  width: var(--sizing-md);
+  height: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__list-icon {
+  width: var(--sizing-md);
+}
+
+.github {
+  fill: white;
+}
+.footer__ARR {
+  margin-top: var(--spacing-base);
+
+  @media (min-width: 45rem) {
+    margin-top: 0;
+  }
+}

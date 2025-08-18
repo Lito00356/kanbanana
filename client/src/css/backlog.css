@@ -1,7 +1,31 @@
-.backlog-list {
-  background-color: rgb(36, 138, 61);
+.backlog-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  height: 100dvh;
+}
+
+.projects-container {
+  border-right: 1px solid var(--bg-color);
+  padding: 1rem;
 }
 
 .backlog-list-item {
   padding: 1rem;
+}
+
+.outlet {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-top: 1.5rem;
+}
+
+.outlet__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.backlog-list {
 }

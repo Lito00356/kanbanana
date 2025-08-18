@@ -31,9 +31,7 @@ export function PaginatedBacklog() {
 
   return (
     <>
-      <div>
-        <BacklogList tasks={tasks} />
-      </div>
+      <BacklogList tasks={tasks} />
       <Pagination currentPage={currentPage} pageCount={pageCount} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
     </>
   );

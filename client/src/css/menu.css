@@ -20,7 +20,7 @@
 }
 
 .menu-items {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   display: flex;
@@ -38,12 +38,13 @@
 
 .projects-list {
   list-style-type: none;
-  padding: 0;
+  padding: 0.5rem;
 }
 
 .projects-list > li:hover {
   scale: 1.05;
   transform-origin: left;
+  cursor: pointer;
 }
 
 .projects-list__item {
@@ -56,6 +57,7 @@
   position: absolute;
   bottom: 1rem;
   right: 3.5rem;
+  left: 3.5rem;
   width: 0;
   font-size: 0;
   padding: 0;
@@ -67,6 +69,7 @@
     bottom: 1rem;
     left: 3.5rem;
     border-radius: 5px 5px 5px 0;
+    transform-origin: center left;
   }
 }
 
@@ -183,9 +186,17 @@
 
 .hamburger.open {
   display: block;
-  margin-right: 12.5rem;
-  border-radius: 50% 0 0 50%;
+  border-radius: 0 50% 50% 0;
   transition:
     margin-right 0.3s ease,
     border-radius 0.1s ease-out;
+
+  @media (max-width: 41.9rem) {
+    margin-left: 11.5rem;
+  }
+
+  @media (min-width: 42rem) {
+    margin-right: 12.5rem;
+    border-radius: 50% 0 0 50%;
+  }
 }
