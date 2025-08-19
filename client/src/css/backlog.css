@@ -11,7 +11,7 @@
 }
 
 .backlog-list-item {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .outlet {
@@ -25,7 +25,4 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.backlog-list {
 }
