@@ -8,6 +8,7 @@
 @import url("backlog.css");
 @import url("about.css");
 @import url("footer.css");
+@import url("tagsWindow.css");
 
 :root {
   --bg-color: rgb(223, 223, 223);

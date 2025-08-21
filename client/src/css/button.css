@@ -15,8 +15,26 @@
   font-size: 12px;
   padding: 0.05rem 0.4rem;
   border: 1px solid black;
+  position: relative;
 
   &:hover {
     background-color: rgb(255 94 94);
+  }
+}
+
+.button--selection-tag {
+  font-size: 0.875rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid black;
+  position: relative;
+
+  &:hover {
+    color: white;
+    background-color: black;
+  }
+
+  &.active {
+    color: white;
+    background-color: black;
   }
 }

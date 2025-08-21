@@ -1,0 +1,14 @@
+.tags-window {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background-color: var(--bg-color);
+  height: fit-content;
+  max-height: 15rem;
+  width: 14rem;
+  overflow-y: auto;
+  padding: 0.5rem;
+  top: 6rem;
+  border-radius: 15px;
+}

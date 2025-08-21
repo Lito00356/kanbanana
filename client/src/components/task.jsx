@@ -1,10 +1,19 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { API_TOKEN, API_URL } from "../constants/constants";
+// import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], tags = [], handleDelete }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [styleDialog, setStyleDialog] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+  const [showTagWindow, setShowTagWindow] = useState(false);
+  const [activeTags, setActiveTags] = useState(() => {
+    return tags.map((tag) => tag.id);
+  });
 
   function openDialog() {
     setStyleDialog(true);
@@ -15,9 +24,15 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
 
   function closeDialog() {
     setStyleDialog(false);
+    setIsEditing(false);
+    setShowTagWindow(false);
     if (dialogTask.current) {
       dialogTask.current.close();
     }
+  }
+
+  function closeEdit() {
+    setIsEditing(false);
   }
 
   function openConfirm() {
@@ -31,8 +46,66 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
   }
 
   function editTask() {
-    alert("You are trying to edit the task");
+    setIsEditing(true);
   }
+
+  async function handleTagWindow() {
+    if (!showTagWindow) {
+      setShowTagWindow(true);
+    } else {
+      setShowTagWindow(false);
+    }
+  }
+
+  function handleActivateTag(tagId) {
+    setActiveTags((prev) => {
+      if (prev.includes(tagId)) {
+        return prev.filter((id) => id !== tagId);
+      } else {
+        return [...prev, tagId];
+      }
+    });
+  }
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setDebouncedTags(activeTags);
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+  // }, [activeTags]);
+
+  // async function updateTaskTags(taskId, tagIds) {
+  //   try {
+  //     const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${API_TOKEN}`,
+  //       },
+  //       body: JSON.stringify({
+  //         data: {
+  //           tags: tagIds,
+  //         },
+  //       }),
+  //     });
+
+  //     const result = await response.json();
+
+  //     if (!response.ok) {
+  //       console.error("Error updating tags:", result);
+  //     } else {
+  //       console.log("✅ Tags updated:", result);
+  //     }
+  //   } catch (err) {
+  //     console.error("Network error:", err);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (debouncedTags.length >= 0) {
+  //     updateTaskTags(taskId, debouncedTags);
+  //   }
+  // }, [debouncedTags, taskId]);
 
   return (
     <>
@@ -51,7 +124,7 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
 
       <dialog className={`modal ${styleDialog ? "open" : ""}`} ref={dialogTask}>
         <div className="modal__section-1">
-          <h2>{task.title}</h2>
+          {isEditing ? <input value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2>{task.title}</h2>}
           <div className="modal__list-order">
             <ul className="modal__tags">
               {tags.map((tag) => {
@@ -62,10 +135,35 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
                 );
               })}
             </ul>
-            <button className="button button--add-tag">+ Tag</button>
+            <div>
+              <button className="button button--add-tag" onClick={handleTagWindow}>
+                + Tag
+              </button>
+              {showTagWindow ? (
+                <div className="tags-window">
+                  {allTags.map((tag) => (
+                    <button key={tag.id} className={`button button--selection-tag ${activeTags.includes(tag.id) ? "active" : ""}`} onClick={() => handleActivateTag(tag.id)}>
+                      {tag.tagName}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <strong>Description</strong>
-          <p className="modal__description">{task.description}</p>
+          {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
+          {isEditing ? (
+            <div className="flex">
+              <button type="button" onClick={() => handleEdit(task, title, description)}>
+                Save
+              </button>
+              <button onClick={closeEdit}>Cancel</button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="modal__section-2">
           <button className="button modal__close" onClick={closeDialog}>

@@ -5,7 +5,7 @@ export async function getProjectById(id) {
     throw new Error("Project ID is required");
   }
 
-  const response = await fetch(`${API_URL}/projects/${id}?populate[tasks][populate]=*`, {
+  const response = await fetch(`${API_URL}/projects/${id}?populate[tasks][populate]=*&populate[tags][populate]=*`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
