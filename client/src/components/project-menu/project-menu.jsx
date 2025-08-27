@@ -1,9 +1,23 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getProjects } from "../../queries/get-projects";
 
-export function ProjectMenu({ projects = [] }) {
+export function ProjectMenu() {
+  const {
+    data: projects,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => getProjects(),
+  });
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
+
+  if (isLoading) return <div>Loading projects...</div>;
+  if (error) return <div>Error loading projects.</div>;
 
   function openSideMenu() {
     setOpenProjects((prev) => !prev);
@@ -35,22 +49,22 @@ export function ProjectMenu({ projects = [] }) {
           <Link to="/" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Main menu
           </Link>
-          <Link to="about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="/about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             About
           </Link>
           <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
-            Other projects <span>&#9654;</span>
+            <span className="arrow-left">&#9664;</span> Other projects <span className="arrow-right">&#9654;</span>
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
               {projects.map((project) => (
                 <li key={project.id}>
-                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__item">
+                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__link">
                     {project.projectName}
                   </Link>
                 </li>
               ))}
             </ul>
           </span>
-          <Link to="backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="/backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Backlog
           </Link>
         </div>

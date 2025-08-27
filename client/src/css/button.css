@@ -6,8 +6,16 @@
   padding: 0.5rem 0.75rem;
   cursor: pointer;
 
+  &.is-current {
+    background-color: var(--bg-color);
+  }
+
   &:hover {
-    background-color: var(--bg-color-hover);
+    background-color: var(--bg-color-accent-hover);
+
+    @media (min-width: 42rem) {
+      background-color: var(--bg-color-hover);
+    }
   }
 }
 

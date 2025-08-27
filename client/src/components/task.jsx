@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { API_TOKEN, API_URL } from "../constants/constants";
-// import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags, handleDrag, handleStatusChange }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -14,6 +12,14 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
   const [activeTags, setActiveTags] = useState(() => {
     return tags.map((tag) => tag.id);
   });
+  const [showSaveTags, setShowSaveTags] = useState(false);
+
+  const allStatus = { toDo: 7, inProgress: 3, readyForReview: 5, done: 1, backlog: 9 };
+
+  const statusArray = Object.entries(allStatus).map(([progStatus, id]) => ({
+    id,
+    progStatus,
+  }));
 
   function openDialog() {
     setStyleDialog(true);
@@ -67,49 +73,27 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     });
   }
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setDebouncedTags(activeTags);
-  //   }, 500);
-  //   return () => clearTimeout(timer);
-  // }, [activeTags]);
+  useEffect(() => {
+    const originalTags = tags.map((tag) => tag.id).sort();
+    const currentTags = [...activeTags].sort();
 
-  // async function updateTaskTags(taskId, tagIds) {
-  //   try {
-  //     const response = await fetch(`${API_URL}/tasks/${taskId}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${API_TOKEN}`,
-  //       },
-  //       body: JSON.stringify({
-  //         data: {
-  //           tags: tagIds,
-  //         },
-  //       }),
-  //     });
+    const isChanged = JSON.stringify(originalTags) !== JSON.stringify(currentTags);
+    setShowSaveTags(isChanged);
+  }, [activeTags, tags]);
 
-  //     const result = await response.json();
+  function handleDragStart(e) {
+    e.stopPropagation();
+    e.dataTransfer.setData("application/json", JSON.stringify(task));
+    handleDrag(task);
+  }
 
-  //     if (!response.ok) {
-  //       console.error("Error updating tags:", result);
-  //     } else {
-  //       console.log("✅ Tags updated:", result);
-  //     }
-  //   } catch (err) {
-  //     console.error("Network error:", err);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (debouncedTags.length >= 0) {
-  //     updateTaskTags(taskId, debouncedTags);
-  //   }
-  // }, [debouncedTags, taskId]);
+  function handleDragStop() {
+    handleDrag(null);
+  }
 
   return (
     <>
-      <li className="task__item" key={task.id} onClick={openDialog}>
+      <li className="task__item" key={task.id} onClick={openDialog} draggable onDragStart={handleDragStart} onDragEnd={handleDragStop}>
         <span>{task.title}</span>
         <ul className="modal__tags">
           {tags.map((tag) => {
@@ -124,7 +108,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
 
       <dialog className={`modal ${styleDialog ? "open" : ""}`} ref={dialogTask}>
         <div className="modal__section-1">
-          {isEditing ? <input value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2>{task.title}</h2>}
+          {isEditing ? <input className="title-editing" value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2 className="title-editing">{task.title}</h2>}
           <div className="modal__list-order">
             <ul className="modal__tags">
               {tags.map((tag) => {
@@ -146,6 +130,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
                       {tag.tagName}
                     </button>
                   ))}
+                  {showSaveTags ? <button onClick={() => handleTags(task, activeTags)}>Save</button> : ""}
                 </div>
               ) : (
                 ""
@@ -153,7 +138,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
             </div>
           </div>
           <strong>Description</strong>
-          {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
+          {isEditing ? <textarea className="modal__description editing" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
           {isEditing ? (
             <div className="flex">
               <button type="button" onClick={() => handleEdit(task, title, description)}>
@@ -175,6 +160,17 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
           <button className="button" onClick={openConfirm}>
             delete task
           </button>
+          <div className="select-wrapper">
+            <label htmlFor="">Change Status</label>
+            <select name="status" id="status-select" className="button" onChange={(e) => handleStatusChange(e, task.documentId)}>
+              <option value="null">Select status</option>
+              {statusArray.map((status) => (
+                <option key={status.id} value={status.id}>
+                  {status.progStatus}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </dialog>
 

@@ -4,12 +4,12 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 0 auto;
-  padding: var(--spacing-md) 0;
+  padding: 1rem 0 2rem;
 }
 
 .footer__list {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: 1.5rem;
   padding: 0;
 }
 

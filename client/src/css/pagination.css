@@ -1,0 +1,15 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pagination-list {
+  display: contents;
+  list-style-type: none;
+}

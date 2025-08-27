@@ -1,21 +1,24 @@
 import { useState, useEffect } from "react";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
+import { DisplayTask } from "../task";
+import { useTaskHandlers } from "../../handlers/handlers";
+import { AddTaskButton } from "../add-task/add-task";
 
-export function PaginatedBacklog({ selectedProject, isPending, isError, error }) {
+export function PaginatedBacklog({ selectedProject, isPending, isError, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [tasks, setTasks] = useState([]);
+  const [selectedProjectID, setSelectedProjectID] = useState("");
 
   useEffect(() => {
-    console.log(selectedProject);
-
     setCurrentPage(1);
   }, [selectedProject]);
 
   useEffect(() => {
     if (selectedProject) {
       fetchBacklogItems(selectedProject, pageSize, currentPage);
+      setSelectedProjectID(selectedProject.documentId);
     }
   }, [selectedProject, currentPage, pageSize]);
 
@@ -29,13 +32,14 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
   }
 
   async function fetchBacklogItems(project, pageSize, currentPage) {
+    const backlogTasks = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog") : [];
+
     let start = pageSize * (currentPage - 1);
-    let tasks = [];
-    for (let i = start; i < Math.min(start + pageSize, project.tasks.length); i++) {
-      tasks.push(project.tasks[i]);
-    }
-    setTasks(tasks);
+    const paginatedTasks = backlogTasks.slice(start, start + pageSize);
+    setTasks(paginatedTasks);
   }
+
+  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, selectedProjectID);
 
   if (isPending) return <span>Loading...</span>;
   if (isError) return <span>Error: {error.message}</span>;
@@ -48,8 +52,20 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
             <small>for</small>
             <h2>{selectedProject.projectName}</h2>
           </div>
-          <BacklogList tasks={tasks} />
-          <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
+          <div className="outlet-taskwrapper">
+            <div className="outlet__tasks">
+              {tasks.map((task) => (
+                <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
+              ))}
+            </div>
+            <div className="outlet-add-wrapper">
+              <small>Add to backlog</small>
+              <AddTaskButton status={9} onAddTask={handleAddTask} />
+            </div>
+          </div>
+          <div className="pagination-wrapper">
+            <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
+          </div>
         </>
       ) : (
         <div>

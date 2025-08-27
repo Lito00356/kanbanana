@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ProjectMenu } from "../components/project-menu/project-menu";
+import { SearchBar } from "../components/search-bar/SearchBar";
 
 export const Route = createFileRoute("/about")({
   component: RouteComponent,
@@ -11,88 +13,24 @@ function RouteComponent() {
         <header>
           <section className="image-card image-card--reverse">
             <picture className="content__wrapper" id="me">
-              <source className="image-card__media image-card__media--no-mask" media="(max-width: 42rem)" srcSet="../../public/images/webp/Portret_me.webp" type="image/webp" />
-              <img className="image-card__media" src="../../public/images/Portret_me.jpg" alt="my portrait" />
+              <source className="image-card__media image-card__media--no-mask" media="(max-width: 42rem)" srcSet="../../public/images/webp/react.webp" type="image/webp" />
+              <img className="image-card__media" src="../../public/images/react.png" alt="react logo" />
             </picture>
             <div className="content__wrapper">
-              <h1 className="image-card__title">About me</h1>
-              <p className="image-card__content">
-                Before I ventured into web development, I spent many years working in the film and advertising industry as a compositor in visual effects (VFX). I was lucky enough to work on a wide range of projects — from feature films to high-end commercials — where I honed my eye for detail, problem-solving, and creative collaboration. But after a long run in VFX, I felt the urge to explore a new direction and challenge myself in a different way. That’s what led me to programming. I'm now
-                studying at Artevelde Hogeschool in Ghent, where I’m developing a strong technical skillset and applying my creative background to building engaging digital experiences.
-              </p>
-              <div className="button button-wrapper">
-                <a className="button-link" href="#resume">
-                  Resume
-                </a>
-              </div>
+              <h1 className="image-card__title">About the project</h1>
+              <p className="image-card__content">I created a kanban-style task management app that allows users to organize projects, tasks, and tags. Each project has tasks that can move across different progress states like To Do, In Progress, Ready for Review, Done, and Backlog..</p>
+              <p className="image-card__content">I built features such as:</p>
+              <ul className="image-card__list">
+                <li className="image-card__list-item">Task dialogs for viewing, editing, and deleting tasks</li>
+                <li className="image-card__list-item">Tag management with dynamic assignment and removal</li>
+                <li className="image-card__list-item">A search bar that filters tasks by title or tag while keeping them in the correct kanban columns</li>
+                <li className="image-card__list-item">Confirmation dialogs for safer deletes</li>
+                <li className="image-card__list-item">Automatic syncing of tag changes to the backend</li>
+              </ul>
+              <p className="image-card__content last">The app is built with React on the frontend, using hooks for state management, and Strapi as the backend CMS to manage projects, tasks, and tags. Data is handled via REST API calls, and I designed the UI around modals, inline editing, and a kanban board layout for a smooth user experience.</p>
             </div>
           </section>
         </header>
-
-        <section className="container-80 grid-wrapper" id="resume">
-          <h2 className="fade-in">My work experience!</h2>
-          <div className="grid">
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Artevelde Hogeschool</strong>
-              <p>
-                <time dateTime="09-24">September 2024</time>- Now
-              </p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Developer</strong>
-              <p>Currently studying programming with a focus on modern web technologies like JavaScript, Node.js, and React. Building projects and learning to turn ideas into functional digital experiences.</p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>UFX studios</strong>
-              <p>
-                <time dateTime="05-23">May 2023</time>-<time dateTime="09-24">September 2024</time>
-              </p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Compositor</strong>
-              <p>Worked on a variety of film and commercial projects, combining CGI and live-action footage into seamless final shots. Collaborated closely with VFX teams to deliver high-quality visuals.</p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Light VFX</strong>
-              <p>
-                <time dateTime="01-21">January 2021</time>-<time dateTime="06-23">June 2023</time>
-              </p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Compositor</strong>
-              <p>Focused on high-end visual effects for international productions. Responsible for integrating complex elements and ensuring visual consistency across sequences.</p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Flow Postproduction</strong>
-              <p>
-                <time dateTime="09-20">September 2020</time>-<time dateTime="01-21">January 2021</time>
-              </p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in">
-              <strong>Compositor</strong>
-              <p>Short-term role handling fast-paced commercial post work. Delivered clean, polished compositions under tight deadlines.</p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in-last">
-              <strong>Digital District</strong>
-              <p>
-                <time dateTime="08-19">August 2019</time>-<time dateTime="03-20">March 2020</time>
-              </p>
-            </article>
-
-            <article className="grid__item grid__item--span fade-in-last">
-              <strong>Compositor</strong>
-              <p>Worked on feature films and advertisements. Developed precision and an eye for detail in compositing and color matching.</p>
-            </article>
-          </div>
-        </section>
 
         <footer className="footer">
           <nav className="footer__nav">
@@ -145,7 +83,7 @@ function RouteComponent() {
               </li>
               <li className="footer__list-item">
                 <a className="footer__list-link imdb" href="https://www.imdb.com/name/nm10240524/?ref_=nv_sr_srsg_0_tt_1_nm_3_in_0_q_tomasz%2520liksza" target="_blank" rel="noopener noreferrer">
-                  <svg className="footer__list-icon" xmlns="http://www.w3.org/2000/svg" ariaLabel="IMDb" role="img" viewBox="0 0 512 512" fill="#000000">
+                  <svg className="footer__list-icon" xmlns="http://www.w3.org/2000/svg" aria-label="IMDb" role="img" viewBox="0 0 512 512" fill="#000000">
                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                     <g id="SVGRepo_iconCarrier">
@@ -165,6 +103,9 @@ function RouteComponent() {
             | All rights reserved
           </small>
         </footer>
+        <div className="menu-items">
+          <ProjectMenu />
+        </div>
       </main>
     </>
   );

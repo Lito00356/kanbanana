@@ -1,6 +1,7 @@
 .tasks-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
   @media (min-width: 42rem) {
     justify-content: flex-start;
@@ -15,6 +16,15 @@
   min-width: 20rem;
   gap: 1rem;
   padding: 1rem;
+  transition: background-color 0.2s ease;
+
+  &.drag-over {
+    background-color: rgba(200, 220, 255, 0.6);
+  }
+
+  &.last {
+    margin-bottom: 4rem;
+  }
 }
 
 .task {
@@ -45,10 +55,6 @@
 
 .task__item:hover {
   scale: 1.02;
-}
-
-.task__item--creation {
-  padding: 0;
 }
 
 .form {
