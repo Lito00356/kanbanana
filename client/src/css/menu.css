@@ -189,6 +189,72 @@
   }
 }
 
+.projects-empty {
+  padding: 0.5rem 0.75rem;
+  color: grey;
+  font-size: 0.875rem;
+}
+
+.projects-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.project-form__input {
+  border: 1px solid var(--bg-color-hover);
+  border-radius: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  background-color: white;
+
+  &:focus {
+    outline: 2px solid var(--bg-color-accent);
+  }
+}
+
+.project-form__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.project-form__submit {
+  background-color: var(--bg-color-accent);
+  color: white;
+  border-radius: 0.625rem;
+  padding: 0.4rem 1rem;
+
+  &:hover {
+    background-color: var(--bg-color-accent-hover);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.project-form__cancel {
+  &:hover {
+    background-color: var(--bg-color-hover);
+  }
+}
+
+.project-form__add {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}
+
 .form__close {
   border-radius: 5px;
   padding: 0.25rem 0.5rem;

@@ -1,5 +1,61 @@
 import { API_TOKEN, API_URL } from "../constants/constants";
 
+export function useTagHandlers(refetch, projectId) {
+  async function handleAddTag(tagName) {
+    if (!tagName.trim()) return;
+
+    try {
+      const response = await fetch(`${API_URL}/tags`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+        body: JSON.stringify({
+          data: {
+            tagName: tagName.trim(),
+            project: projectId,
+          },
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Error details:", result);
+        throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
+      }
+
+      await refetch();
+    } catch (error) {
+      console.error("Add tag error:", error);
+    }
+  }
+
+  async function handleDeleteTag(tag) {
+    try {
+      const tagId = tag.documentId;
+      const response = await fetch(`${API_URL}/tags/${tagId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.error("Delete tag failed:", response.status, response.statusText);
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      await refetch();
+    } catch (err) {
+      console.error("Delete tag error:", err);
+    }
+  }
+
+  return { handleAddTag, handleDeleteTag };
+}
+
 export function useTaskHandlers(refetch, projectId) {
   async function handleAddTask(title, status) {
     const requestBody = {

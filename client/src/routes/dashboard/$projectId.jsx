@@ -7,7 +7,8 @@ import { AddTaskButton } from "../../components/add-task/add-task";
 import { API_TOKEN, API_URL } from "../../constants/constants";
 import { SearchBar } from "../../components/search-bar/SearchBar";
 import { ProjectMenu } from "../../components/project-menu/project-menu";
-import { useTaskHandlers } from "../../handlers/handlers";
+import { useTaskHandlers, useTagHandlers } from "../../handlers/handlers";
+import { TagManager } from "../../components/tag-manager/tag-manager";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
   component: function DashboardProject() {
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     }, [project]);
 
     const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, projectId);
+    const { handleAddTag, handleDeleteTag } = useTagHandlers(refetch, projectId);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
@@ -223,6 +225,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         <div className="menu-items">
           <ProjectMenu />
           <SearchBar handleSearch={handleSearch} />
+          <TagManager tags={project.tags} onAddTag={handleAddTag} onDeleteTag={handleDeleteTag} />
         </div>
       </>
     );
