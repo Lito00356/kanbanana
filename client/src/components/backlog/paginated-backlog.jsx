@@ -10,6 +10,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
   const [pageSize, setPageSize] = useState(10);
   const [tasks, setTasks] = useState([]);
   const [selectedProjectID, setSelectedProjectID] = useState("");
+  const [filteredTasks, setFilteredTasks] = useState("");
 
   useEffect(() => {
     setCurrentPage(1);
@@ -33,13 +34,16 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
 
   async function fetchBacklogItems(project, pageSize, currentPage) {
     const backlogTasks = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog") : [];
-
     let start = pageSize * (currentPage - 1);
     const paginatedTasks = backlogTasks.slice(start, start + pageSize);
+    setFilteredTasks(backlogTasks);
     setTasks(paginatedTasks);
   }
 
-  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, selectedProjectID);
+  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(
+    refetch,
+    selectedProjectID,
+  );
 
   if (isPending) return <span>Loading...</span>;
   if (isError) return <span>Error: {error.message}</span>;
@@ -55,7 +59,14 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
           <div className="outlet-taskwrapper">
             <div className="outlet__tasks">
               {tasks.map((task) => (
-                <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
+                <DisplayTask
+                  key={task.id}
+                  task={task}
+                  handleDelete={handleDeleteTask}
+                  handleEdit={handleEditTask}
+                  handleTags={handleTags}
+                  handleStatusChange={handleStatusChange}
+                />
               ))}
             </div>
             <div className="outlet-add-wrapper">
@@ -64,7 +75,13 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
             </div>
           </div>
           <div className="pagination-wrapper">
-            <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
+            <Pagination
+              currentPage={currentPage}
+              pageCount={filteredTasks.length / pageSize}
+              pageSize={pageSize}
+              onPageChanged={handlePageChanged}
+              onPageSizeChanged={handlePageSizeChanged}
+            />
           </div>
         </>
       ) : (

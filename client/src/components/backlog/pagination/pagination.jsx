@@ -20,15 +20,19 @@ export function Pagination({ currentPage, pageCount, onPageChanged }) {
       pageLinks.push(
         <li key={index}>
           <span className="pagination-ellipsis">&hellip;</span>
-        </li>
+        </li>,
       );
     } else {
       pageLinks.push(
         <li key={index}>
-          <button className={"button " + (pageNumber === currentPage ? "is-current" : "")} aria-label={`Go to page ${pageNumber}`} onClick={() => onPageChanged(pageNumber)}>
+          <button
+            className={"button " + (pageNumber === currentPage ? "is-current" : "")}
+            aria-label={`Go to page ${pageNumber}`}
+            onClick={() => onPageChanged(pageNumber)}
+          >
             {pageNumber}
           </button>
-        </li>
+        </li>,
       );
     }
   });
