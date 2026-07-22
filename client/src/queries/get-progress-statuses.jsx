@@ -1,14 +1,14 @@
 import { API_TOKEN, API_URL } from "../constants/constants";
 
-export async function getProjects() {
-  const result = await fetch(`${API_URL}/projects?status=draft&populate[tasks][populate]=*`, {
+export async function getProgressStatuses() {
+  const response = await fetch(`${API_URL}/progress-statuses?status=draft`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${API_TOKEN}`,
     },
   });
-  const data = await result.json();
+  const data = await response.json();
 
   return data.data;
 }

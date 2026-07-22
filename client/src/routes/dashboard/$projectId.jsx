@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
+import { getProgressStatuses } from "../../queries/get-progress-statuses";
 import { DisplayTask } from "../../components/task";
 import { AddTaskButton } from "../../components/add-task/add-task";
 import { API_TOKEN, API_URL } from "../../constants/constants";
@@ -23,6 +24,11 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       queryFn: () => getProjectById(projectId),
     });
 
+    const { data: statuses = [], isLoading: statusesLoading } = useQuery({
+      queryKey: ["progress-statuses"],
+      queryFn: getProgressStatuses,
+    });
+
     const [tasks, setTasks] = useState([]);
     const [isDragged, setIsDragged] = useState(null);
     const [isDragOver, setIsDragOver] = useState(null);
@@ -38,7 +44,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, projectId);
     const { handleAddTag, handleDeleteTag } = useTagHandlers(refetch, projectId);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading || statusesLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
@@ -66,19 +72,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     });
 
-    const statusID = {
-      toDo: 7,
-      inProgress: 3,
-      readyForReview: 5,
-      done: 1,
-    };
-
-    const IDStatus = {
-      7: "toDo",
-      3: "inProgress",
-      5: "readyForReview",
-      1: "done",
-    };
+    // Build the status name -> id map dynamically from the API so it
+    // never breaks when the database (and therefore the IDs) changes.
+    const statusID = Object.fromEntries(statuses.map((status) => [status.progStatus, status.id]));
 
     function getColumnsFromTasks(tasks) {
       const columns = {

@@ -5,7 +5,7 @@ export function useTagHandlers(refetch, projectId) {
     if (!tagName.trim()) return;
 
     try {
-      const response = await fetch(`${API_URL}/tags`, {
+      const response = await fetch(`${API_URL}/tags?status=published`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export function useTaskHandlers(refetch, projectId) {
       },
     };
     try {
-      const response = await fetch(`${API_URL}/tasks`, {
+      const response = await fetch(`${API_URL}/tasks?status=published`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

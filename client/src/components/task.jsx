@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getProgressStatuses } from "../queries/get-progress-statuses";
 
 export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags, handleDrag, handleStatusChange }) {
   const dialogTask = useRef(null);
@@ -14,12 +16,10 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
   });
   const [showSaveTags, setShowSaveTags] = useState(false);
 
-  const allStatus = { toDo: 7, inProgress: 3, readyForReview: 5, done: 1, backlog: 9 };
-
-  const statusArray = Object.entries(allStatus).map(([progStatus, id]) => ({
-    id,
-    progStatus,
-  }));
+  const { data: statusArray = [] } = useQuery({
+    queryKey: ["progress-statuses"],
+    queryFn: getProgressStatuses,
+  });
 
   function openDialog() {
     setStyleDialog(true);

@@ -57,7 +57,7 @@ export function ProjectMenu() {
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
               {projects.map((project) => (
                 <li key={project.id}>
-                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__link">
+                  <Link to="/dashboard/$projectId" params={{ projectId: project.documentId }} className="projects-list__link">
                     {project.projectName}
                   </Link>
                 </li>

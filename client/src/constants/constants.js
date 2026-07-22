@@ -1,5 +1,2 @@
-export const API_URL = import.meta.env.PROD ? "https://jammin-api-64t4.onrender.com/api" : "http://localhost:1337/api";
-
-export const API_TOKEN = import.meta.env.PROD
-  ? "ff47e185b1af296a5cc8c81f3626a16e93482b8cb0933fa9bc194283153fd49261fc8afecd3361a64edb0bb1c31243bb83e071ae6d076d52fe77a174a4be5ddbe7b9c93e0c54ccc359a9917cffe739df1200156308718ad8f765b3155f9e99cb162c03a903e53a42b53239aaee1b36a63b78a28ac400db46eed0c57d09eb9135"
-  : "c42b429ef2b4fe1bb413951e2824c8dc73c799a86c0a8d02323eae9d5babf6e19bd79910142fa2af97b1859893f12d9fdf89e74bb6461d7ffd40c7928736e643601133783defa4b8b98c2397f23af398fd120c9887610acaaa2919a03027d995142d1a870f026f2bf2fad50e05cf0dc1c173c6dcbe6c4b4095a02062dbe38eb0";
+export const API_URL = import.meta.env.VITE_API_URL;
+export const API_TOKEN = import.meta.env.VITE_API_TOKEN;

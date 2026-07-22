@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 import { DisplayTask } from "../task";
 import { useTaskHandlers } from "../../handlers/handlers";
 import { AddTaskButton } from "../add-task/add-task";
+import { getProgressStatuses } from "../../queries/get-progress-statuses";
 
 export function PaginatedBacklog({ selectedProject, isPending, isError, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,6 +13,12 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
   const [tasks, setTasks] = useState([]);
   const [selectedProjectID, setSelectedProjectID] = useState("");
   const [filteredTasks, setFilteredTasks] = useState("");
+
+  const { data: statuses = [] } = useQuery({
+    queryKey: ["progress-statuses"],
+    queryFn: getProgressStatuses,
+  });
+  const backlogId = statuses.find((status) => status.progStatus === "backlog")?.id;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -71,7 +79,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
             </div>
             <div className="outlet-add-wrapper">
               <small>Add to backlog</small>
-              <AddTaskButton status={9} onAddTask={handleAddTask} />
+              <AddTaskButton status={backlogId} onAddTask={handleAddTask} />
             </div>
           </div>
           <div className="pagination-wrapper">

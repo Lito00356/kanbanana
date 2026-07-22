@@ -35,7 +35,7 @@ export function AddTaskButton({ status, onAddTask }) {
         <article className="task__item task__item--creation">
           <form className="form" type="POST">
             <label className={`form__label ${addTask ? "" : "form__label--none"}`}>
-              <input className="form__input" type="text" placeholder="Title" vlaue={title} onChange={(e) => setTitle(e.target.value)} />
+              <input className="form__input" type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
             <div
               className="form__commit"

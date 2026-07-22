@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
 
       setIsSubmitting(true);
       try {
-        const response = await fetch(`${API_URL}/projects`, {
+        const response = await fetch(`${API_URL}/projects?status=published`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
