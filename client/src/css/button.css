@@ -46,3 +46,10 @@
     background-color: black;
   }
 }
+
+.button--save-tags {
+  width: 100%;
+  text-align: center;
+  margin-top: 0.25rem;
+  border: 1px solid black;
+}

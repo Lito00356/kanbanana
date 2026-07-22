@@ -130,7 +130,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
                       {tag.tagName}
                     </button>
                   ))}
-                  {showSaveTags ? <button onClick={() => handleTags(task, activeTags)}>Save</button> : ""}
+                  <button className="button button--save-tags" onClick={() => handleTags(task, activeTags)} style={{ visibility: showSaveTags ? "visible" : "hidden" }}>Save</button>
                 </div>
               ) : (
                 ""
@@ -141,7 +141,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
           {isEditing ? <textarea className="modal__description editing" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
           {isEditing ? (
             <div className="flex">
-              <button type="button" onClick={() => handleEdit(task, title, description)}>
+              <button type="button" onClick={async () => { await handleEdit(task, title, description); setIsEditing(false); }}>
                 Save
               </button>
               <button onClick={closeEdit}>Cancel</button>
