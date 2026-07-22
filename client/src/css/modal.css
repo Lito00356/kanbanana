@@ -84,6 +84,7 @@
 
 .modal__tags-item {
   background-color: black;
+  color: white;
   padding: 0.15rem 0.5rem;
   border-radius: 10px;
   align-content: center;
