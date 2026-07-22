@@ -1,18 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 import { DisplayTask } from "../task";
 import { useTaskHandlers } from "../../handlers/handlers";
 import { AddTaskButton } from "../add-task/add-task";
 import { getProgressStatuses } from "../../queries/get-progress-statuses";
 
-export function PaginatedBacklog({ selectedProject, isPending, isError, error, refetch }) {
+export function PaginatedBacklog({ selectedProject, isLoading, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [tasks, setTasks] = useState([]);
-  const [selectedProjectID, setSelectedProjectID] = useState("");
-  const [filteredTasks, setFilteredTasks] = useState("");
 
   const { data: statuses = [] } = useQuery({
     queryKey: ["progress-statuses"],
@@ -20,41 +16,25 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
   });
   const backlogId = statuses.find((status) => status.progStatus === "backlog")?.id;
 
-  useEffect(() => {
-    setCurrentPage(1);
+  const backlogTasks = useMemo(() => {
+    if (!selectedProject?.tasks) return [];
+    return selectedProject.tasks.filter((task) => task.progress_status?.progStatus === "backlog");
   }, [selectedProject]);
 
-  useEffect(() => {
-    if (selectedProject) {
-      fetchBacklogItems(selectedProject, pageSize, currentPage);
-      setSelectedProjectID(selectedProject.documentId);
-    }
-  }, [selectedProject, currentPage, pageSize]);
+  const paginatedTasks = useMemo(() => {
+    const start = pageSize * (currentPage - 1);
+    return backlogTasks.slice(start, start + pageSize);
+  }, [backlogTasks, currentPage, pageSize]);
 
-  function handlePageChanged(pageNumber) {
-    setCurrentPage(pageNumber);
-  }
-
-  function handlePageSizeChanged(size) {
-    setPageSize(size);
-    setCurrentPage(1);
-  }
-
-  async function fetchBacklogItems(project, pageSize, currentPage) {
-    const backlogTasks = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog") : [];
-    let start = pageSize * (currentPage - 1);
-    const paginatedTasks = backlogTasks.slice(start, start + pageSize);
-    setFilteredTasks(backlogTasks);
-    setTasks(paginatedTasks);
-  }
+  const pageCount = Math.ceil(backlogTasks.length / pageSize);
 
   const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(
     refetch,
-    selectedProjectID,
+    selectedProject?.documentId,
   );
 
-  if (isPending) return <span>Loading...</span>;
-  if (isError) return <span>Error: {error.message}</span>;
+  if (isLoading) return <span>Loading...</span>;
+  if (error) return <span>Error: {error.message}</span>;
 
   return (
     <>
@@ -66,7 +46,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
           </div>
           <div className="outlet-taskwrapper">
             <div className="outlet__tasks">
-              {tasks.map((task) => (
+              {paginatedTasks.map((task) => (
                 <DisplayTask
                   key={task.id}
                   task={task}
@@ -76,21 +56,20 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
                   handleStatusChange={handleStatusChange}
                 />
               ))}
+              {backlogTasks.length === 0 && <p className="backlog-empty">No tasks in backlog</p>}
             </div>
-            <div className="outlet-add-wrapper">
-              <small>Add to backlog</small>
-              <AddTaskButton status={backlogId} onAddTask={handleAddTask} />
+            <AddTaskButton status={backlogId} onAddTask={handleAddTask} />
+          </div>
+          {pageCount > 1 && (
+            <div className="pagination-wrapper">
+              <Pagination
+                currentPage={currentPage}
+                pageCount={pageCount}
+                pageSize={pageSize}
+                onPageChanged={setCurrentPage}
+              />
             </div>
-          </div>
-          <div className="pagination-wrapper">
-            <Pagination
-              currentPage={currentPage}
-              pageCount={filteredTasks.length / pageSize}
-              pageSize={pageSize}
-              onPageChanged={handlePageChanged}
-              onPageSizeChanged={handlePageSizeChanged}
-            />
-          </div>
+          )}
         </>
       ) : (
         <div>

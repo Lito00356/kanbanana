@@ -46,21 +46,23 @@
   margin: 0 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 0.5rem;
+  max-width: 20rem;
 
   @media (min-width: 42rem) {
-    height: 80dvh;
+    max-height: 80dvh;
+    overflow-y: auto;
   }
 }
 
 .outlet__tasks {
   padding-top: 1rem;
-  width: 15rem;
-}
-
-.outlet-add-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 15rem;
-  align-self: end;
+}
+
+.backlog-empty {
+  color: grey;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
 }

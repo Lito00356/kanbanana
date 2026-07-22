@@ -28,16 +28,13 @@ export function SearchBar({ handleSearch }) {
             </g>
           </svg>
         </button>
-        <form className={`search-form ${openSearchBar ? "open" : ""}`}>
+        <form className={`search-form ${openSearchBar ? "open" : ""}`} onSubmit={(e) => { e.preventDefault(); handleSearch(searchValue); }}>
           <label className={`search-form__label ${openSearchBar ? "open" : ""}`}>
             <input type="text" name="search" className="search-form__input" onChange={handleSearchInputChange} />
           </label>
           <button
             className={`search-action ${openSearchBar ? "open" : ""}`}
-            type="button"
-            onClick={() => {
-              handleSearch(searchValue);
-            }}
+            type="submit"
           >
             Search
           </button>
