@@ -110,7 +110,6 @@ server/*#
 server/ssl
 server/.idea
 server/nbproject
-server/public/uploads/*
 server/!public/uploads/.gitkeep
 server/.tsbuildinfo
 server/.eslintcache
