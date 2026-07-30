@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
 import { AddTask } from "./components/task";
 import { ProjectMenu } from "./components/project-menu/project-menu";
 import { SearchBar } from "./components/search-bar/SearchBar";
@@ -13,29 +12,31 @@ export default function MyApp() {
       <section className="tasks-container">
         <div className="tasks" id="to-do">
           <strong className="tasks__title">To Do</strong>
-          {/* <AddTask /> */}
+          <AddTask />
         </div>
 
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>
-          {/* <AddTask /> */}
+          <AddTask />
         </div>
 
-        <div className="tasks" id="in-progress">
+        <div className="tasks" id="review">
           <strong className="tasks__title">Ready for review</strong>
-          {/* <AddTask /> */}
+          <AddTask />
         </div>
 
-        <div className="tasks" id="in-progress">
+        <div className="tasks" id="done">
           <strong className="tasks__title">Done</strong>
-          {/* <AddTask /> */}
+          <AddTask />
         </div>
       </section>
 
       <div className="menu-items">
-        {/* <ProjectMenu /> */}
+        <ProjectMenu />
 
-        <div className="flex">{/* <SearchBar /> */}</div>
+        <div className="flex">
+          <SearchBar />
+        </div>
       </div>
     </QueryClientProvider>
   );
