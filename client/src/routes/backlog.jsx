@@ -45,11 +45,17 @@ function RouteComponent() {
           <h1>Backlog</h1>
           <ul className="projects-list">
             {projects.map((project) => {
-              const taskCount = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog").length : 0;
+              const taskCount = project.tasks
+                ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog").length
+                : 0;
               return (
                 <li key={project.id}>
                   <div className="backlog-list-wrapper">
-                    <Link to={`/backlog?projectId=${project.documentId}`} className="projects-list-item" onClick={() => setSelectedProjectId(project.documentId)}>
+                    <Link
+                      to={`/backlog?projectId=${project.documentId}`}
+                      className="projects-list-item"
+                      onClick={() => setSelectedProjectId(project.documentId)}
+                    >
                       {project.projectName}
                     </Link>
                     <small>{taskCount}</small>
@@ -60,7 +66,12 @@ function RouteComponent() {
           </ul>
         </div>
         <div className="outlet">
-          <PaginatedBacklog selectedProject={selectedProject} isLoading={projectLoading} error={error} refetch={refetchProject} />
+          <PaginatedBacklog
+            selectedProject={selectedProject}
+            isLoading={projectLoading}
+            error={error}
+            refetch={refetchProject}
+          />
         </div>
         <div className="menu-items">
           <ProjectMenu />

@@ -64,7 +64,11 @@ export const Route = createFileRoute("/")({
             <ul className="projects-list">
               {data.map((project) => (
                 <li key={project.id}>
-                  <Link to="/dashboard/$projectId" className="projects-list__item" params={{ projectId: project.documentId }}>
+                  <Link
+                    to="/dashboard/$projectId"
+                    className="projects-list__item"
+                    params={{ projectId: project.documentId }}
+                  >
                     {project.projectName}
                   </Link>
                 </li>
@@ -86,7 +90,14 @@ export const Route = createFileRoute("/")({
                 <button className="button project-form__submit" type="submit" disabled={isSubmitting}>
                   {isSubmitting ? "Creating..." : "Create"}
                 </button>
-                <button className="button project-form__cancel" type="button" onClick={() => { setShowForm(false); setProjectName(""); }}>
+                <button
+                  className="button project-form__cancel"
+                  type="button"
+                  onClick={() => {
+                    setShowForm(false);
+                    setProjectName("");
+                  }}
+                >
                   Cancel
                 </button>
               </div>

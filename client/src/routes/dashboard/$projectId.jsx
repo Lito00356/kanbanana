@@ -42,10 +42,14 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }, [project]);
 
-    const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, projectId);
+    const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(
+      refetch,
+      projectId,
+    );
     const { handleAddTag, handleDeleteTag } = useTagHandlers(refetch, projectId);
 
-    if (isLoading || statusesLoading) return <Loading label="Loading project" message="Syncing the latest tasks and statuses." fullscreen />;
+    if (isLoading || statusesLoading)
+      return <Loading label="Loading project" message="Syncing the latest tasks and statuses." fullscreen />;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
@@ -179,41 +183,105 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           <small>project</small>
         </div>
         <section className="tasks-container">
-          <div className={`tasks ${isDragOver === statusID.toDo && isDragged ? "drag-over" : ""}`} id="to-do" onDragOver={(e) => handleDragOver(e, statusID.toDo)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.toDo)}>
+          <div
+            className={`tasks ${isDragOver === statusID.toDo && isDragged ? "drag-over" : ""}`}
+            id="to-do"
+            onDragOver={(e) => handleDragOver(e, statusID.toDo)}
+            onDragLeave={handleLeave}
+            onDrop={(e) => handleDrop(e, statusID.toDo)}
+          >
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {columnsToDisplay.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
+                <DisplayTask
+                  key={task.id}
+                  task={task}
+                  allTags={project.tags}
+                  tags={task.tags}
+                  handleDelete={handleDeleteTask}
+                  handleEdit={handleEditTask}
+                  handleTags={handleTags}
+                  handleDrag={setIsDragged}
+                  handleStatusChange={handleStatusChange}
+                />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks ${isDragOver === statusID.inProgress && isDragged ? "drag-over" : ""}`} id="in-progress" onDragOver={(e) => handleDragOver(e, statusID.inProgress)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.inProgress)}>
+          <div
+            className={`tasks ${isDragOver === statusID.inProgress && isDragged ? "drag-over" : ""}`}
+            id="in-progress"
+            onDragOver={(e) => handleDragOver(e, statusID.inProgress)}
+            onDragLeave={handleLeave}
+            onDrop={(e) => handleDrop(e, statusID.inProgress)}
+          >
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {columnsToDisplay.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
+                <DisplayTask
+                  key={task.id}
+                  task={task}
+                  allTags={project.tags}
+                  tags={task.tags}
+                  handleDelete={handleDeleteTask}
+                  handleEdit={handleEditTask}
+                  handleTags={handleTags}
+                  handleDrag={setIsDragged}
+                  handleStatusChange={handleStatusChange}
+                />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks ${isDragOver === statusID.readyForReview && isDragged ? "drag-over" : ""}`} id="ready-for-review" onDragOver={(e) => handleDragOver(e, statusID.readyForReview)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.readyForReview)}>
+          <div
+            className={`tasks ${isDragOver === statusID.readyForReview && isDragged ? "drag-over" : ""}`}
+            id="ready-for-review"
+            onDragOver={(e) => handleDragOver(e, statusID.readyForReview)}
+            onDragLeave={handleLeave}
+            onDrop={(e) => handleDrop(e, statusID.readyForReview)}
+          >
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {columnsToDisplay.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
+                <DisplayTask
+                  key={task.id}
+                  task={task}
+                  allTags={project.tags}
+                  tags={task.tags}
+                  handleDelete={handleDeleteTask}
+                  handleEdit={handleEditTask}
+                  handleTags={handleTags}
+                  handleDrag={setIsDragged}
+                  handleStatusChange={handleStatusChange}
+                />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks last ${isDragOver === statusID.done && isDragged ? "drag-over" : ""}`} id="done" onDragOver={(e) => handleDragOver(e, statusID.done)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.done)}>
+          <div
+            className={`tasks last ${isDragOver === statusID.done && isDragged ? "drag-over" : ""}`}
+            id="done"
+            onDragOver={(e) => handleDragOver(e, statusID.done)}
+            onDragLeave={handleLeave}
+            onDrop={(e) => handleDrop(e, statusID.done)}
+          >
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {columnsToDisplay.done.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
+                <DisplayTask
+                  key={task.id}
+                  task={task}
+                  allTags={project.tags}
+                  tags={task.tags}
+                  handleDelete={handleDeleteTask}
+                  handleEdit={handleEditTask}
+                  handleTags={handleTags}
+                  handleDrag={setIsDragged}
+                  handleStatusChange={handleStatusChange}
+                />
               ))}
             </ul>
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />
