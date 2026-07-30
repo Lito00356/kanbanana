@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects } from "../queries/get-projects";
 import { API_TOKEN, API_URL } from "../constants/constants";
+import { Loading } from "../components/loading/loading";
 
 export const Route = createFileRoute("/")({
   component: function Home() {
@@ -46,7 +47,7 @@ export const Route = createFileRoute("/")({
     }
 
     if (isPending) {
-      return <span>Loading...</span>;
+      return <Loading label="Loading projects" message="Setting up your main menu." fullscreen />;
     }
 
     if (isError) {

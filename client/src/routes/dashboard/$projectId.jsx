@@ -10,6 +10,7 @@ import { SearchBar } from "../../components/search-bar/SearchBar";
 import { ProjectMenu } from "../../components/project-menu/project-menu";
 import { useTaskHandlers, useTagHandlers } from "../../handlers/handlers";
 import { TagManager } from "../../components/tag-manager/tag-manager";
+import { Loading } from "../../components/loading/loading";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
   component: function DashboardProject() {
@@ -44,7 +45,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, projectId);
     const { handleAddTag, handleDeleteTag } = useTagHandlers(refetch, projectId);
 
-    if (isLoading || statusesLoading) return <div>Loading...</div>;
+    if (isLoading || statusesLoading) return <Loading label="Loading project" message="Syncing the latest tasks and statuses." fullscreen />;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 

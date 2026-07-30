@@ -6,6 +6,7 @@ import { getProjects } from "../queries/get-projects";
 import { getProjectById } from "../queries/get-project-by-id";
 import { useState } from "react";
 import { ProjectMenu } from "../components/project-menu/project-menu";
+import { Loading } from "../components/loading/loading";
 
 export const Route = createFileRoute("/backlog")({
   component: RouteComponent,
@@ -33,7 +34,7 @@ function RouteComponent() {
     enabled: !!selectedProjectId,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading label="Loading backlog" message="Fetching the available projects." fullscreen />;
   if (error) return <div>Error loading project.</div>;
   if (!projects) return <div>Project not found.</div>;
 

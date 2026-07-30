@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects } from "../../queries/get-projects";
+import { Loading } from "../loading/loading";
 
 export function ProjectMenu() {
   const {
@@ -16,7 +17,7 @@ export function ProjectMenu() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
 
-  if (isLoading) return <div>Loading projects...</div>;
+  if (isLoading) return <Loading label="Loading projects" message="Getting your boards ready." />;
   if (error) return <div>Error loading projects.</div>;
 
   function openSideMenu() {

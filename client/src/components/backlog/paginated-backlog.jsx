@@ -5,6 +5,7 @@ import { DisplayTask } from "../task";
 import { useTaskHandlers } from "../../handlers/handlers";
 import { AddTaskButton } from "../add-task/add-task";
 import { getProgressStatuses } from "../../queries/get-progress-statuses";
+import { Loading } from "../loading/loading";
 
 export function PaginatedBacklog({ selectedProject, isLoading, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +34,7 @@ export function PaginatedBacklog({ selectedProject, isLoading, error, refetch })
     selectedProject?.documentId,
   );
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loading label="Loading backlog" message="Preparing the selected project." fullscreen />;
   if (error) return <span>Error: {error.message}</span>;
 
   return (
