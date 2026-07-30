@@ -2,14 +2,9 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects } from "../../queries/get-projects";
-import { Loading } from "../loading/loading";
 
 export function ProjectMenu() {
-  const {
-    data: projects,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: projects, error } = useQuery({
     queryKey: ["projects"],
     queryFn: () => getProjects(),
   });
@@ -17,7 +12,6 @@ export function ProjectMenu() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
 
-  if (isLoading) return <Loading label="Loading projects" message="Getting your boards ready." />;
   if (error) return <div>Error loading projects.</div>;
 
   function openSideMenu() {
@@ -61,7 +55,7 @@ export function ProjectMenu() {
           <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
             <span className="arrow-left">&#9664;</span> Other projects <span className="arrow-right">&#9654;</span>
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
-              {projects.map((project) => (
+              {(projects ?? []).map((project) => (
                 <li key={project.id}>
                   <Link
                     to="/dashboard/$projectId"
