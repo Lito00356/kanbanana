@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getProgressStatuses } from "../queries/get-progress-statuses";
 
@@ -28,14 +28,25 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     }
   }
 
-  function closeDialog() {
+  const closeDialog = useCallback(() => {
     setStyleDialog(false);
     setIsEditing(false);
     setShowTagWindow(false);
     if (dialogTask.current) {
       dialogTask.current.close();
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    const dialog = dialogTask.current;
+    if (!dialog) return;
+    const handleCancel = (e) => {
+      e.preventDefault();
+      closeDialog();
+    };
+    dialog.addEventListener("cancel", handleCancel);
+    return () => dialog.removeEventListener("cancel", handleCancel);
+  }, [closeDialog]);
 
   function closeEdit() {
     setIsEditing(false);
@@ -130,7 +141,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
                       {tag.tagName}
                     </button>
                   ))}
-                  <button className="button button--save-tags" onClick={() => handleTags(task, activeTags)} style={{ visibility: showSaveTags ? "visible" : "hidden" }}>Save</button>
+                  <button className="button button--save-tags" onClick={async () => { await handleTags(task, activeTags); setShowTagWindow(false); }} style={{ visibility: showSaveTags ? "visible" : "hidden" }}>Save</button>
                 </div>
               ) : (
                 ""
@@ -140,7 +151,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
           <strong>Description</strong>
           {isEditing ? <textarea className="modal__description editing" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
           {isEditing ? (
-            <div className="flex">
+            <div className="modal__edit-actions">
               <button type="button" onClick={async () => { await handleEdit(task, title, description); setIsEditing(false); }}>
                 Save
               </button>

@@ -10,17 +10,17 @@
   min-width: 20rem;
   max-height: 60rem;
   border-radius: 10px;
-  border: 2px solid var(--bg-color-hover);
-  box-shadow: var(--box-shadow);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   z-index: 1;
 
-  @media (min-with: 42rem) {
+  @media (min-width: 42rem) {
     height: 37rem;
   }
 }
 
 .modal::backdrop {
-  background-color: rgba(105, 105, 105, 0.295);
+  background-color: rgba(20, 20, 20, 0.3);
 }
 
 .modal.open {
@@ -36,9 +36,13 @@
   height: 9rem;
   min-width: 18rem;
   border-radius: 10px;
-  border: 2px solid var(--bg-color-hover);
-  box-shadow: var(--box-shadow);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
+}
+
+.confirm-modal::backdrop {
+  background-color: rgba(20, 20, 20, 0.3);
 }
 
 .confirm-modal.open {
@@ -50,10 +54,13 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 0.5rem;
 }
 
 .button__confrim {
   background-color: var(--bg-color);
+  border-radius: 0.625rem;
+  padding: 0.4rem 1.25rem;
 }
 
 .modal__section-1 {
@@ -113,6 +120,24 @@
   width: 15rem;
 }
 
+.modal__edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modal__edit-actions button {
+  background-color: var(--bg-color);
+  border: none;
+  border-radius: 0.625rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.modal__edit-actions button:hover {
+  background-color: var(--bg-color-hover);
+}
+
 .modal__section-2 {
   display: flex;
   justify-content: space-around;
@@ -125,6 +150,12 @@
     flex-direction: column;
     justify-content: flex-start;
   }
+}
+
+.modal__section-2 .button {
+  background-color: var(--bg-color);
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
 }
 
 .modal__close {
