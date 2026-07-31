@@ -47,7 +47,7 @@ export const Route = createFileRoute("/")({
     }
 
     if (isPending) {
-      return <Loading label="Loading projects" message="Setting up your main menu." fullscreen />;
+      return <Loading label="Loading projects" message="Server is starting. Setting up your main menu." fullscreen />;
     }
 
     if (isError) {
